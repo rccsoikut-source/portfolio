@@ -1,7 +1,14 @@
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 
-export default function Contact() {
+const defaultContact = {
+  phone: '+880 1717-773813',
+  email: 'soikut776@gmail.com',
+  location: 'Rangpur, Bangladesh',
+};
+
+export default function Contact({ data = {} }) {
+  const contact = { ...defaultContact, ...data };
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,7 +22,6 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission
     alert('Thank you for your message! I will get back to you soon.');
     setFormData({ name: '', email: '', subject: '', message: '' });
   };
@@ -74,7 +80,7 @@ export default function Contact() {
             />
             <button
               type="submit"
-              className="px-8 py-3 bg-primary hover:bg-primary-dark rounded-xl font-medium text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/25 flex items-center gap-2"
+              className="px-8 py-3 bg-primary hover:bg-primary-dark rounded-xl font-medium text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/25 flex items-center gap-2 cursor-pointer"
             >
               Send Message
               <Send size={18} />
@@ -86,33 +92,39 @@ export default function Contact() {
             <div className="p-6 bg-dark-800 border border-dark-600 rounded-2xl">
               <h3 className="text-lg font-semibold mb-6">Contact Details</h3>
               <div className="space-y-5">
-                <a href="tel:+8801717773813" className="flex items-start gap-4 group">
-                  <div className="p-2.5 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                    <Phone size={18} className="text-primary" />
+                {contact.phone && (
+                  <a href={`tel:${contact.phone.replace(/[^0-9+]/g, '')}`} className="flex items-start gap-4 group">
+                    <div className="p-2.5 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                      <Phone size={18} className="text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Phone</p>
+                      <p className="text-gray-300 group-hover:text-primary transition-colors">{contact.phone}</p>
+                    </div>
+                  </a>
+                )}
+                {contact.email && (
+                  <a href={`mailto:${contact.email}`} className="flex items-start gap-4 group">
+                    <div className="p-2.5 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                      <Mail size={18} className="text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Email</p>
+                      <p className="text-gray-300 group-hover:text-primary transition-colors">{contact.email}</p>
+                    </div>
+                  </a>
+                )}
+                {contact.location && (
+                  <div className="flex items-start gap-4">
+                    <div className="p-2.5 bg-primary/10 rounded-lg">
+                      <MapPin size={18} className="text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Location</p>
+                      <p className="text-gray-300">{contact.location}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Phone</p>
-                    <p className="text-gray-300 group-hover:text-primary transition-colors">+880 1717-773813</p>
-                  </div>
-                </a>
-                <a href="mailto:soikut776@gmail.com" className="flex items-start gap-4 group">
-                  <div className="p-2.5 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                    <Mail size={18} className="text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Email</p>
-                    <p className="text-gray-300 group-hover:text-primary transition-colors">soikut776@gmail.com</p>
-                  </div>
-                </a>
-                <div className="flex items-start gap-4">
-                  <div className="p-2.5 bg-primary/10 rounded-lg">
-                    <MapPin size={18} className="text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Location</p>
-                    <p className="text-gray-300">Rangpur, Bangladesh</p>
-                  </div>
-                </div>
+                )}
               </div>
             </div>
           </div>

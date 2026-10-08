@@ -1,6 +1,6 @@
 import { Sparkles } from 'lucide-react';
 
-const skills = [
+const defaultSkills = [
   'AI Content Creation',
   'Prompt Engineering',
   'Video Generation',
@@ -11,7 +11,12 @@ const skills = [
   'Creative Writing',
 ];
 
-export default function About() {
+const defaultSummary = 'Results-driven operations professional and digital creator with progressive experience in team supervision, customer service, and e-commerce management. I specialize in leveraging advanced AI technologies for digital content creation, streamlining workflows, and driving measurable operational improvements.';
+
+export default function About({ data = {} }) {
+  const summary = data.summary || defaultSummary;
+  const skills = data.skills && data.skills.length > 0 ? data.skills : defaultSkills;
+
   return (
     <section id="about" className="py-24">
       <div className="max-w-6xl mx-auto px-6">
@@ -32,8 +37,8 @@ export default function About() {
               </div>
               <h3 className="text-xl font-semibold">Who I Am</h3>
             </div>
-            <p className="text-gray-400 leading-relaxed text-lg">
-              Results-driven operations professional and digital creator with progressive experience in team supervision, customer service, and e-commerce management. I specialize in leveraging advanced AI technologies for digital content creation, streamlining workflows, and driving measurable operational improvements.
+            <p className="text-gray-400 leading-relaxed text-lg whitespace-pre-line">
+              {summary}
             </p>
           </div>
 

@@ -1,37 +1,43 @@
 import { Calendar, MapPin } from 'lucide-react';
 
-const experiences = [
+const defaultExperiences = [
   {
+    id: '1',
     title: 'AI Content Creator & Prompt Engineer',
     company: 'Freelance',
     period: 'Ongoing',
     description: 'Specialize in AI-driven visual storytelling, cinematic video generation, image upscaling, and crafting creative social media content and tele-sales scripts. Completed specialized training in Artificial Intelligence to enhance digital workflows.',
-    type: 'current',
+    isCurrent: true,
   },
   {
+    id: '2',
     title: 'Assistant Operations Manager',
     company: 'Rangpur Cadet Coaching',
     period: 'Jan 2026 — Present',
     description: 'Supervise floor staff, resolve operational bottlenecks, and monitor team performance to ensure smooth daily operations.',
-    type: 'current',
+    isCurrent: true,
   },
   {
+    id: '3',
     title: 'Customer Service Representative',
     company: 'Rangpur Cadet Coaching',
     period: 'Jan 2025 — Dec 2025',
     description: 'Handled high volumes of customer inquiries and managed support tickets via Trello, maintaining excellent satisfaction ratings.',
-    type: 'past',
+    isCurrent: false,
   },
   {
+    id: '4',
     title: 'Coordinator',
     company: 'Kendrobindu Coaching',
     period: 'Mar 2022 — Aug 2024',
     description: 'Organised administrative workflows and bridged communication between faculty and students to improve institutional coordination.',
-    type: 'past',
+    isCurrent: false,
   },
 ];
 
-export default function Experience() {
+export default function Experience({ data = [] }) {
+  const experiences = Array.isArray(data) && data.length > 0 ? data : defaultExperiences;
+
   return (
     <section id="experience" className="py-24">
       <div className="max-w-6xl mx-auto px-6">
@@ -50,7 +56,7 @@ export default function Experience() {
 
           <div className="space-y-12">
             {experiences.map((exp, index) => (
-              <div key={index} className={`relative flex flex-col md:flex-row items-start gap-8 ${
+              <div key={exp.id || index} className={`relative flex flex-col md:flex-row items-start gap-8 ${
                 index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
               }`}>
                 {/* Timeline Dot */}
@@ -61,10 +67,10 @@ export default function Experience() {
                   index % 2 === 0 ? 'md:pr-12' : 'md:pl-12'
                 }`}>
                   <div className="p-6 bg-dark-800 border border-dark-600 rounded-2xl hover:border-primary/30 transition-all duration-500 hover:shadow-lg hover:shadow-black/20 group">
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex items-center gap-2 mb-2 flex-wrap">
                       <Calendar size={14} className="text-primary" />
                       <span className="text-sm text-primary font-medium">{exp.period}</span>
-                      {exp.type === 'current' && (
+                      {(exp.isCurrent || exp.type === 'current') && (
                         <span className="px-2 py-0.5 bg-green-500/10 text-green-400 text-xs rounded-full border border-green-500/20">
                           Current
                         </span>
@@ -75,7 +81,7 @@ export default function Experience() {
                       <MapPin size={12} />
                       {exp.company}
                     </p>
-                    <p className="text-gray-400 text-sm leading-relaxed">{exp.description}</p>
+                    <p className="text-gray-400 text-sm leading-relaxed whitespace-pre-line">{exp.description}</p>
                   </div>
                 </div>
               </div>
